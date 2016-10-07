@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PC RSS Feed programmatically</string>
+    <string name="title_activity_article_web_view">ArticleWebView</string>
+    <item type="id" name="cardP"/>
+    <item type="id" name="imageP"/>
+    <item type="id" name="titleP" />
+    <item type="id" name="recyclerP" />
+    <item type="id" name="cardPfirst"/>
+    <item type="id" name="imagePfirst" />
+    <item type="id" name="titlePfirst"/>
+    <item type="id" name="descriptionPfirst" />
+    <item type="id" name="toolbarP"/>
+    <item type="id" name="webviewP"/>
+</resources>
