@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -34,6 +36,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int GROUP_ARTICLES = 1;
     ArrayList<PCRssFeedItems> feedItems = null;
     Context context;
+    MainActivityArticles mainActivityArticles = new MainActivityArticles();
 
     public CustomAdapter(Context context, ArrayList<PCRssFeedItems> feedItems) {
         this.feedItems = feedItems;
@@ -65,9 +68,13 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     case GROUP_ARTICLES:
                         ((GroupViewHolder)holder).image.setImageBitmap(null);
                         ((GroupViewHolder)holder).title.setText(current.getTitle());
-
-                        new DownloadImageTask(((GroupViewHolder)holder).image)
-                                .execute(current.getImageUrl());
+                        //Custom Image loader
+//                        new DownloadImageTask(((GroupViewHolder)holder).image)
+//                                .execute(current.getImageUrl());
+                        //Image Loading with Glide
+                        //Image Loading with Glide
+                        Glide.with(context).load(current.getImageUrl()).into(((GroupViewHolder) holder).image);
+                        //Image Loading with Picasso
                         //Picasso.with(context).load(current.getImageUrl()).into(((GroupViewHolder)holder).image);
                         ((GroupViewHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -84,8 +91,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         ((FirstHeaderArticleViewHolder)holder).image.setImageBitmap(null);
 
                         ((FirstHeaderArticleViewHolder)holder).title.setText(current.getTitle());
-                        new DownloadImageTask(((FirstHeaderArticleViewHolder)holder).image)
-                                .execute(current.getImageUrl());
+                        //Custom Image Loader
+//                        new DownloadImageTask(((FirstHeaderArticleViewHolder)holder).image)
+//                                .execute(current.getImageUrl());
+                        //Image Loading with Glide
+                        Glide.with(context).load(current.getImageUrl()).into(((FirstHeaderArticleViewHolder)holder).image);
                         //Picasso.with(context).load(current.getImageUrl()).into(((FirstHeaderArticleViewHolder)holder).image);
                         String desciptionPubDate = current.getPubDate().substring(0, 17) + " - " + current.getDescription().replaceAll("\\<.*?>","");
                         ((FirstHeaderArticleViewHolder)holder).descriptionPubDate.setText(desciptionPubDate);
@@ -239,9 +249,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         imageFirstArticle.setScaleType(ImageView.ScaleType.FIT_XY);
 
         imageFirstArticle.setLayoutParams(imageParams);
-        imageFirstArticle.getLayoutParams().height = 800;
-
-
+        if (new MainActivityArticles().isTablet(context)) {
+            imageFirstArticle.getLayoutParams().height = dpTopxs(400);
+        } else {
+            imageFirstArticle.getLayoutParams().height = dpTopxs(200);
+        }
+        //imageFirstArticle.getLayoutParams().height = dpTopxs(300);//800;
 
         TextView titleFirstArticle = new TextView(context);
         titleFirstArticle.setId(R.id.titlePfirst);
@@ -306,7 +319,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         imageView.setLayoutParams(params2);
         imageView.setImageResource(R.drawable.loading);
 
-        imageView.getLayoutParams().height = 400;
+        imageView.getLayoutParams().height = dpTopxs(120);//400;
 
         ProgressBar progressBar = new ProgressBar(context);
 
@@ -327,6 +340,12 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         cardView.addView(linearLayout);
 
         return cardView;
+    }
+    public int dpTopxs(int dps) {
+        //final float scale = getContext().getResources().getDisplayMetrics().density;
+        final float scale = context.getResources().getDisplayMetrics().density;
+        int pixels = (int) (dps * scale + 0.5f);
+        return pixels;
     }
 
 }

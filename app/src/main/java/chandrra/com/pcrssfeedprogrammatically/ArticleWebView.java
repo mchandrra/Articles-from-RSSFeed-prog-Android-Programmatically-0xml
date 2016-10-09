@@ -96,7 +96,7 @@ public class ArticleWebView extends AppCompatActivity {
     public Toolbar createToolbar() {
         Toolbar toolbar = new Toolbar(this);
         LinearLayout.LayoutParams toolbarParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,150);
+                ViewGroup.LayoutParams.MATCH_PARENT, dpTopxs(50));
         toolbar.setLayoutParams(toolbarParams);
         toolbar.setBackgroundColor(Color.BLUE);
         int toolBarBackground = getResources().getColor(R.color.colorPrimary);
@@ -117,5 +117,11 @@ public class ArticleWebView extends AppCompatActivity {
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextColor(Color.WHITE);
         return textView;
+    }
+    public int dpTopxs(int dps) {
+        //final float scale = getContext().getResources().getDisplayMetrics().density;
+        final float scale = getResources().getDisplayMetrics().density;
+        int pixels = (int) (dps * scale + 0.5f);
+        return pixels;
     }
 }

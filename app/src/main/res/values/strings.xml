@@ -11,4 +11,5 @@
     <item type="id" name="descriptionPfirst" />
     <item type="id" name="toolbarP"/>
     <item type="id" name="webviewP"/>
+    <item type="id" name="fabProgrammatically"/>
 </resources>
